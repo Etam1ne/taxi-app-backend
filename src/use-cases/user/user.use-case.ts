@@ -11,8 +11,8 @@ export class UserUseCases {
     private userFactoryService: UserFactoryService,
   ) {}
 
-  public create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userFactoryService.createNewUser(createUserDto);
+  public async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this.userFactoryService.createNewUser(createUserDto);
 
     return this.dataServices.users.create(user);
   }
@@ -27,8 +27,6 @@ export class UserUseCases {
 
   public async getByEmail(email: string): Promise<User> {
     const user: User = await this.dataServices.users.getByEmail(email);
-
-    if (!user) throw new NotFoundException('User not found');
 
     return user;
   }
