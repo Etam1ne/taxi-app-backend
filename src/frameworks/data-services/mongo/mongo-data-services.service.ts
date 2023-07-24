@@ -1,15 +1,15 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { IDataServices } from 'src/core/abstract';
+import { IDataServices } from '../../../core/abstract';
 import { User, UserDocument } from './model';
 import { Model } from 'mongoose';
-import { MongoGenericRepository } from './mongo-generic-repository';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class MongoDataServices
   implements IDataServices, OnApplicationBootstrap
 {
-  users: MongoGenericRepository<User>;
+  users: UserRepository;
 
   constructor(
     @InjectModel(User.name)
@@ -17,6 +17,6 @@ export class MongoDataServices
   ) {}
 
   onApplicationBootstrap() {
-    this.users = new MongoGenericRepository<User>(this.UserRepository);
+    this.users = new UserRepository(this.UserRepository);
   }
 }

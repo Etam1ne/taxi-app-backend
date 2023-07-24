@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from 'src/core/dtos';
-import { User } from 'src/core/entities';
+import { CreateUserDto } from '../../core/dtos';
+import { User } from '../../core/entities';
 
 @Injectable()
 export class UserFactoryService {
-  createNewUser(createUserDto: CreateUserDto) {
-    const newUser: User = { ...createUserDto };
-
+  public createNewUser(createUserDto: CreateUserDto): User {
+    const newUser: User = { ...createUserDto }
+    
     return newUser;
   }
 }

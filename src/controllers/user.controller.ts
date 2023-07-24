@@ -1,13 +1,19 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { CreateUserDto } from 'src/core/dtos';
-import { UserUseCases } from 'src/use-cases/user/user.use-case';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { CreateUserDto } from '../core/dtos';
+import { User } from '../core/entities';
+import { UserUseCases } from '../use-cases/user/user.use-case';
 
 @Controller('user')
 export class UserController {
   constructor(private userUseCases: UserUseCases) {}
 
   @Post()
-  createAuthor(@Body() createUserDto: CreateUserDto) {
-    return this.userUseCases.createUser(createUserDto);
+  createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.userUseCases.create(createUserDto);
+  }
+
+  @Get(':email')
+  getUserByEmail(@Param('email') email: string) {
+    return this.userUseCases.getByEmail(email);
   }
 }
